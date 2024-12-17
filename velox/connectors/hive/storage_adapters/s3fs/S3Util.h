@@ -87,6 +87,11 @@ inline void getBucketAndKeyFromPath(
     std::string& key) {
   auto firstSep = path.find_first_of(kSep);
   bucket = path.substr(0, firstSep);
+  auto firstDot = bucket.find_first_of('.');
+    if (firstDot != std::string::npos) {
+        // if find dot, it means it's a aliyun oss address like ${bucketName}.${endpoint}
+        bucket = bucket.substr(0, firstDot);
+    }
   key = path.substr(firstSep + 1);
 }
 
